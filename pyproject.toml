@@ -7,7 +7,6 @@ authors = ["alpden550 <alpden550@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 django = "^3.0.5"
-Jinja2 = "^2.11.2"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"

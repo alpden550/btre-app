@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class Realtor(models.Model):
@@ -10,8 +11,8 @@ class Realtor(models.Model):
     photo = models.ImageField('Photo', upload_to=settings.UPLOAD_IMAGE_PATH, blank=True)
     phone = models.CharField('Phone', max_length=20)
     email = models.EmailField('Email', max_length=50, blank=True)
-    is_mvp = models.NullBooleanField('Is MVP', null=True, blank=True)
-    hired_at = models.DateField('Hired At', auto_now_add=True)
+    is_mvp = models.BooleanField('Is MVP', default=False)
+    hired_at = models.DateField('Hired At', default=timezone.now(), blank=True)
 
     class Meta:
         verbose_name = 'Realtor'

@@ -135,5 +135,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'btre/static'),
 ]
 
+# Media Folder Settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 LISTING_PHOTO_PATH = 'photos/%Y/%m/%d/'
 UPLOAD_IMAGE_PATH = 'photos/%Y/%m/%d/'

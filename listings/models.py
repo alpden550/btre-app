@@ -9,7 +9,7 @@ class Listing(models.Model):
     address = models.CharField('Listing Address', max_length=200)
     city = models.CharField('City', max_length=50)
     state = models.CharField('State', max_length=50)
-    zipcode = models.CharField('State', max_length=20)
+    zipcode = models.CharField('ZipCode', max_length=20)
     description = models.TextField('Description', blank=True)
     price = models.PositiveIntegerField('Price')
     bedrooms = models.PositiveIntegerField('BedRooms', default=1)
@@ -32,6 +32,15 @@ class Listing(models.Model):
     photo6 = models.ImageField(upload_to=settings.LISTING_PHOTO_PATH, blank=True)
     is_published = models.BooleanField('Is Published', default=True)
     created_at = models.DateTimeField('Created At', auto_now_add=True)
+
+    realtors = models.ForeignKey(
+        'realtors.Realtor',
+        verbose_name='Realtor',
+        on_delete=models.DO_NOTHING,
+        related_name='listings',
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = 'Listing'

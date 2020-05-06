@@ -136,3 +136,4 @@ STATICFILES_DIRS = [
 ]
 
 LISTING_PHOTO_PATH = 'photos/%Y/%m/%d/'
+UPLOAD_IMAGE_PATH = 'photos/%Y/%m/%d/'

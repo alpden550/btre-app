@@ -134,3 +134,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'btre/static'),
 ]
+
+LISTING_PHOTO_PATH = 'photos/%Y/%m/%d/'

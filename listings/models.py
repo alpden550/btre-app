@@ -33,7 +33,7 @@ class Listing(models.Model):
     is_published = models.BooleanField('Is Published', default=True)
     created_at = models.DateTimeField('Created At', auto_now_add=True)
 
-    realtors = models.ForeignKey(
+    realtor = models.ForeignKey(
         'realtors.Realtor',
         verbose_name='Realtor',
         on_delete=models.DO_NOTHING,

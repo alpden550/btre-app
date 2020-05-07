@@ -12,7 +12,7 @@ class Realtor(models.Model):
     phone = models.CharField('Phone', max_length=20)
     email = models.EmailField('Email', max_length=50, blank=True)
     is_mvp = models.BooleanField('Is MVP', default=False)
-    hired_at = models.DateField('Hired At', default=timezone.now(), blank=True)
+    hired_at = models.DateField('Hired At', default=timezone.now, blank=True)
 
     class Meta:
         verbose_name = 'Realtor'

@@ -1,10 +1,18 @@
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
+
+from listings.models import Listing
 
 
-class ListingsListView(TemplateView):
+class ListingsListView(ListView):
     """Manage all listings."""
 
+    model = Listing
+    context_object_name = 'listings'
     template_name = 'listings/listings.html'
+
+    def get_queryset(self):
+        """Get listings objects."""
+        return Listing.objects.select_related('realtor')
 
 
 class ListingDetailView(TemplateView):

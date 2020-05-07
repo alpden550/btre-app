@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+
+    'debug_toolbar',
 
     'pages.apps.PagesConfig',
     'listings.apps.ListingsConfig',
@@ -55,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'btre.urls'
@@ -141,3 +145,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LISTING_PHOTO_PATH = 'photos/%Y/%m/%d/'
 UPLOAD_IMAGE_PATH = 'photos/%Y/%m/%d/'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

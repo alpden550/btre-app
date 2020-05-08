@@ -6,6 +6,6 @@ app_name = 'listings'
 
 urlpatterns = [
     path('', views.ListingsListView.as_view(), name='listings'),
-    path('<int:pk>/', views.ListingDetailView, name='listing'),
+    path('<int:pk>/', views.ListingDetailView.as_view(), name='listing'),
     path('search/', views.ListingSearchDetailView.as_view(), name='search'),
 ]

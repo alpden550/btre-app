@@ -1,4 +1,4 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from listings.models import Listing
 
@@ -19,9 +19,12 @@ class ListingsListView(ListView):
     paginate_by = 6
 
 
-class ListingDetailView(TemplateView):
+class ListingDetailView(DetailView):
     """Manage detail listing."""
 
+    model = Listing
+    queryset = Listing.objects.select_related('realtor')
+    context_object_name = 'listing'
     template_name = 'listings/listing.html'
 
 

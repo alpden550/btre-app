@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 {% block title %}| All Listings{% endblock %}
 
@@ -42,7 +43,7 @@
               {% if listing.photo_main %}
                 <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
               {% else %}
-                <img src="https://via.placeholder.com/300x200" alt="">
+                <img src="{% static 'img/default-house.jpg' %}" alt="">
               {% endif %}
               <div class="card-img-overlay">
                 <h2>

@@ -7,12 +7,16 @@ class ListingsListView(ListView):
     """Manage all listings."""
 
     model = Listing
+    queryset = (
+        Listing.objects.select_related(
+            'realtor',
+        ).order_by(
+            '-created_at',
+        ).filter(is_published=True)
+    )
     context_object_name = 'listings'
     template_name = 'listings/listings.html'
-
-    def get_queryset(self):
-        """Get listings objects."""
-        return Listing.objects.select_related('realtor')
+    paginate_by = 6
 
 
 class ListingDetailView(TemplateView):

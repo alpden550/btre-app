@@ -1,5 +1,6 @@
 from django.views.generic import ListView, TemplateView
 
+from listings.choices import bedroom_choices, price_choices, state_choices
 from listings.models import Listing
 from realtors.models import Realtor
 
@@ -17,6 +18,14 @@ class MainPageView(ListView):
     )[:3]
     context_object_name = 'listings'
     template_name = 'pages/index.html'
+
+    def get_context_data(self, **kwargs):
+        """Pass listing choices into form."""
+        context = super().get_context_data(**kwargs)
+        context['bedroom_choices'] = bedroom_choices
+        context['price_choices'] = price_choices
+        context['state_choices'] = state_choices
+        return context
 
 
 class AboutPageView(TemplateView):

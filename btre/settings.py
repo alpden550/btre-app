@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from django.contrib.messages import constants as messages
 from environs import Env
 
 env = Env()
@@ -154,3 +155,9 @@ INTERNAL_IPS = [
 # LOGIN AND LOGOUT
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+
+
+# Messaging
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

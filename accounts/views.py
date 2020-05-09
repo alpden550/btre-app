@@ -1,11 +1,4 @@
-from django.contrib.auth.views import LoginView
 from django.views.generic.base import TemplateView
-
-
-class AccountLoginView(LoginView):
-    """Custom login view for accounts."""
-
-    redirect_authenticated_user = True
 
 
 class AccountRegisterView(TemplateView):

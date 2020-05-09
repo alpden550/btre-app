@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'listings.apps.ListingsConfig',
     'realtors.apps.RealtorsConfig',
-    'accounts.apps.AccountsConfig,'
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +150,7 @@ UPLOAD_IMAGE_PATH = 'photos/%Y/%m/%d/'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# LOGIN AND LOGOUT
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'

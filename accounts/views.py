@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -6,6 +8,24 @@ from django.views.generic import CreateView
 from django.views.generic.base import TemplateView
 
 from accounts.forms import RegisterForm
+
+
+class AccountLoginView(SuccessMessageMixin, LoginView):
+    """Custom login view."""
+
+    success_message = '%(username)s successfully loginned in'
+    template_name = 'accounts/login.html'
+    redirect_authenticated_user = True
+
+
+class AccountLogoutView(LogoutView):
+    """Custom logout view."""
+
+    def dispatch(self, request, *args, **kwargs):
+        """Add message about logout."""
+        response = super().dispatch(request, *args, **kwargs)
+        messages.add_message(request, messages.INFO, 'Successfully logged out.')
+        return response
 
 
 class AccountRegisterView(SuccessMessageMixin, CreateView):

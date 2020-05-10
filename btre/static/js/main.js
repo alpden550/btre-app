@@ -3,7 +3,7 @@ document.querySelector('.year').innerHTML = date.getFullYear();
 
 setTimeout(
   function () {
-    $('#alert').fadeOut('slow');
+    $('#form-error').fadeOut('slow');
   }, 5000
 );
 

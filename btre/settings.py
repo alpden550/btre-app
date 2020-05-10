@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -148,6 +148,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LISTING_PHOTO_PATH = 'photos/%Y/%m/%d/'
 UPLOAD_IMAGE_PATH = 'photos/%Y/%m/%d/'
 
+# Django debug toolbar
 INTERNAL_IPS = [
     '127.0.0.1',
 ]

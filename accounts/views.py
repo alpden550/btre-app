@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -44,7 +45,14 @@ class AccountRegisterView(SuccessMessageMixin, CreateView):
         return super().get(request, *args, **kwargs)
 
 
-class AccountDashboardView(TemplateView):
+class AccountDashboardView(LoginRequiredMixin, TemplateView):
     """View to show an account dashboard."""
 
+    login_url = reverse_lazy('accounts:login')
+    permission_denied_message = 'You must be already loginned.'
     template_name = 'accounts/dashboard.html'
+
+    def handle_no_permission(self):
+        """Send error message if user is not authenticated."""
+        messages.add_message(self.request, messages.WARNING, 'You must be loginned in')
+        return super().handle_no_permission()

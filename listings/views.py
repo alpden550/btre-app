@@ -1,5 +1,9 @@
+from django.contrib import messages
+from django.urls import reverse
 from django.views.generic import DetailView, ListView
+from django.views.generic.edit import FormMixin
 
+from accounts.forms import ContactForm
 from listings.choices import bedroom_choices, price_choices, state_choices
 from listings.models import Listing
 
@@ -20,13 +24,35 @@ class ListingsListView(ListView):
     paginate_by = 6
 
 
-class ListingDetailView(DetailView):
+class ListingDetailView(FormMixin, DetailView):
     """Manage detail listing."""
 
     model = Listing
     queryset = Listing.objects.select_related('realtor')
+    form_class = ContactForm
     context_object_name = 'listing'
     template_name = 'listings/listing.html'
+
+    def get_success_url(self):
+        """Return success url after form submitting."""
+        return reverse('listings:listing', kwargs={'pk': self.object.pk})
+
+    def post(self, request, *args, **kwargs):
+        """Save inquiry to db."""
+        self.object = self.get_object()
+        form = self.get_form()
+
+        if form.is_valid():
+            user = request.user if request.user.is_authenticated else None
+            contact = form.save(commit=False)
+            contact.listing = self.object
+            if user is not None:
+                contact.user_id = user.id
+            contact.save()
+            messages.success(request, 'You request has been sent.')
+            return super().form_valid(form)
+
+        return super().form_invalid(form)
 
 
 class ListingSearchDetailView(ListView):

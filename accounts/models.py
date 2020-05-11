@@ -16,6 +16,8 @@ class Contact(models.Model):
         verbose_name='Listing',
         on_delete=models.CASCADE,
         related_name='contacts',
+        blank=True,
+        null=True,
     )
 
     class Meta:

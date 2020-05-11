@@ -2,8 +2,11 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from accounts.models import Contact
+
 
 class RegisterForm(UserCreationForm):
+    """Form to registrate user."""
 
     class Meta:
         model = User
@@ -23,3 +26,11 @@ class RegisterForm(UserCreationForm):
         if user:
             raise forms.ValidationError('E-mail is already registered!')
         return email
+
+
+class ContactForm(forms.ModelForm):
+    """Form for sending inquiry."""
+
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'phone', 'message', 'listing']

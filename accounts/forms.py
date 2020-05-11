@@ -34,3 +34,15 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ['name', 'email', 'phone', 'message', 'listing']
+        labels = {
+            'listing': 'Property',
+        }
+        widgets = {
+            'listing': forms.TextInput(attrs={'disabled': 'disabled'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        """Added class 'form-control' for all form fields."""
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'

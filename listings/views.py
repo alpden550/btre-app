@@ -37,6 +37,16 @@ class ListingDetailView(FormMixin, DetailView):
         """Return success url after form submitting."""
         return reverse('listings:listing', kwargs={'pk': self.object.pk})
 
+    def get_initial(self):
+        """Return the initial data to use for forms on this view."""
+        initial = super().get_initial()
+        user = self.request.user or None
+        initial['listing'] = self.get_object().title
+        if user:
+            initial['name'] = user.first_name
+            initial['email'] = user.email
+        return initial
+
     def post(self, request, *args, **kwargs):
         """Save inquiry to db."""
         self.object = self.get_object()

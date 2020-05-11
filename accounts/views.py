@@ -49,10 +49,9 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
     """View to show an account dashboard."""
 
     login_url = reverse_lazy('accounts:login')
-    permission_denied_message = 'You must be already loginned.'
     template_name = 'accounts/dashboard.html'
 
     def handle_no_permission(self):
         """Send error message if user is not authenticated."""
-        messages.add_message(self.request, messages.WARNING, 'You must be loginned in')
+        messages.warning(self.request, 'You must be already loginned in.')
         return super().handle_no_permission()

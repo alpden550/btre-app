@@ -1,8 +1,8 @@
-from django.conf import settings
-from django.core.mail import send_mail
 from django.db import models
 from django.db.models import signals
 from django.utils import timezone
+
+from accounts.tasks import send_email_inquiry
 
 
 class Contact(models.Model):
@@ -31,14 +31,9 @@ class Contact(models.Model):
         return self.name
 
 
-def send_email_inquiry(sender, instance, signal, *args, **kwargs):
-    """Send email to manager about inquiring."""
-    send_mail(
-        'Property Listing Inquiry',
-        f'There has been an inquiry for {instance.listing}\n\nSign into admin panel for more info.',  # noqa:E501
-        settings.EMAIL_HOST_USER,
-        [instance.listing.realtor.email],
-    )
+def contact_post_save(sender, instance, signal, *args, **kwargs):
+    """Handle saving contact."""
+    send_email_inquiry.delay(instance.listing.id)
 
 
-signals.post_save.connect(send_email_inquiry, sender=Contact)
+signals.post_save.connect(contact_post_save, sender=Contact)

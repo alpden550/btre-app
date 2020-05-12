@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
@@ -51,7 +53,7 @@ class ListingDetailView(FormMixin, DetailView):
         return initial
 
     def post(self, request, *args, **kwargs):
-        """Save inquiry to db."""
+        """Save inquiry to db and sending email."""
         self.object = self.get_object()
         form = self.get_form()
 
@@ -69,7 +71,14 @@ class ListingDetailView(FormMixin, DetailView):
                     messages.error(request, 'You have already made an inquiry for this listing.')
                     return redirect('listings:listing', pk=self.object.pk)
                 contact.user_id = user.id
+
             contact.save()
+            send_mail(
+                'Property Listing Inquiry',
+                f'There has been an inquiry for {self.object}\n\nSign into admin panel for more info.',  # noqa:E501
+                settings.EMAIL_HOST_USER,
+                [self.object.realtor.email],
+            )
             messages.success(request, 'You request has been sent.')
             return super().form_valid(form)
 

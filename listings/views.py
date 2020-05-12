@@ -31,7 +31,6 @@ class ListingsListView(ListView):
 class ListingDetailView(FormMixin, DetailView):
     """Manage detail listing and send inquiry.."""
 
-    model = Listing
     queryset = Listing.objects.select_related('realtor')
     form_class = ContactForm
     context_object_name = 'listing'

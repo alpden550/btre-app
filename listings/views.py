@@ -42,9 +42,10 @@ class ListingDetailView(FormMixin, DetailView):
     def get_initial(self):
         """Return the initial data to use for forms on this view."""
         initial = super().get_initial()
-        user = self.request.user or None
+        user = self.request.user
         initial['listing'] = self.get_object().title
-        if user:
+
+        if user.is_authenticated:
             initial['name'] = user.first_name
             initial['email'] = user.email
         return initial
@@ -56,15 +57,17 @@ class ListingDetailView(FormMixin, DetailView):
 
         if form.is_valid():
             user = request.user if request.user.is_authenticated else None
-
-            has_contacted = Contact.objects.filter(user_id=user.id, listing=self.object).exists()
-            if has_contacted:
-                messages.error(request, 'You have already made an inquiry for this listing.')
-                return redirect('listings:listing', pk=self.object.pk)
-
             contact = form.save(commit=False)
             contact.listing = self.object
+
             if user is not None:
+                has_contacted = Contact.objects.filter(
+                    user_id=user.id,
+                    listing=self.object,
+                ).exists()
+                if has_contacted:
+                    messages.error(request, 'You have already made an inquiry for this listing.')
+                    return redirect('listings:listing', pk=self.object.pk)
                 contact.user_id = user.id
             contact.save()
             messages.success(request, 'You request has been sent.')

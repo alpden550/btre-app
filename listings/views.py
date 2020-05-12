@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
@@ -29,7 +27,7 @@ class ListingsListView(ListView):
 
 
 class ListingDetailView(FormMixin, DetailView):
-    """Manage detail listing and send inquiry.."""
+    """Manage detail listing and send inquiry."""
 
     queryset = Listing.objects.select_related('realtor')
     form_class = ContactForm
@@ -72,12 +70,6 @@ class ListingDetailView(FormMixin, DetailView):
                 contact.user_id = user.id
 
             contact.save()
-            send_mail(
-                'Property Listing Inquiry',
-                f'There has been an inquiry for {self.object}\n\nSign into admin panel for more info.',  # noqa:E501
-                settings.EMAIL_HOST_USER,
-                [self.object.realtor.email],
-            )
             messages.success(request, 'You request has been sent.')
             return super().form_valid(form)
 

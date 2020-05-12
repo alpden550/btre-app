@@ -1,4 +1,7 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.db import models
+from django.db.models import signals
 from django.utils import timezone
 
 
@@ -26,3 +29,16 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def send_email_inquiry(sender, instance, signal, *args, **kwargs):
+    """Send email to manager about inquiring."""
+    send_mail(
+        'Property Listing Inquiry',
+        f'There has been an inquiry for {instance.listing}\n\nSign into admin panel for more info.',  # noqa:E501
+        settings.EMAIL_HOST_USER,
+        [instance.listing.realtor.email],
+    )
+
+
+signals.post_save.connect(send_email_inquiry, sender=Contact)

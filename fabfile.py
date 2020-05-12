@@ -1,7 +1,7 @@
 from fabric.api import sudo
 
 
-def install_packages(parameter_list):
+def install_packages():
     packages = [
         'python3-pip',
         'python3-dev',

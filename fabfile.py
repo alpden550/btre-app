@@ -18,7 +18,7 @@ def create_env():
     if not files.exists('/home/ubuntu/btre-app/env'):
         run('python3 -m venv env')
     else:
-        with cd('btre'):
+        with cd('/home/ubuntu/btre-app/'):
             run('git pull')
 
 

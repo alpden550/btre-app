@@ -1,9 +1,11 @@
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormMixin
 
 from accounts.forms import ContactForm
+from accounts.models import Contact
 from listings.choices import bedroom_choices, price_choices, state_choices
 from listings.models import Listing
 
@@ -25,7 +27,7 @@ class ListingsListView(ListView):
 
 
 class ListingDetailView(FormMixin, DetailView):
-    """Manage detail listing."""
+    """Manage detail listing and send inquiry.."""
 
     model = Listing
     queryset = Listing.objects.select_related('realtor')
@@ -54,6 +56,12 @@ class ListingDetailView(FormMixin, DetailView):
 
         if form.is_valid():
             user = request.user if request.user.is_authenticated else None
+
+            has_contacted = Contact.objects.filter(user_id=user.id, listing=self.object).exists()
+            if has_contacted:
+                messages.error(request, 'You have already made an inquiry for this listing.')
+                return redirect('listings:listing', pk=self.object.pk)
+
             contact = form.save(commit=False)
             contact.listing = self.object
             if user is not None:

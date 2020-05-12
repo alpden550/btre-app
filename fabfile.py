@@ -14,12 +14,6 @@ def install_packages():
     sudo('apt-get install -y {}'.format(' '.join(packages)))
 
 
-def install_docker_compose():
-    sudo('curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose')
-    sudo('chmod +x /usr/local/bin/docker-compose')
-    sudo('ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
-
-
 def create_env():
     if not files.exists('/home/ubuntu/btre-app/env'):
         run('python3 -m venv env')
@@ -33,8 +27,13 @@ def install_project_code():
         run('git clone https://github.com/alpden550/btre-app.git')
 
 
+def install_pip_requirements():
+    with cd('/home/ubuntu/btre-app/'):
+        run('/home/ubuntu/btre-app/env/bin/pip install -r requirements.txt --upgrade')
+
+
 def deploy():
     install_packages()
-    install_docker_compose()
     install_project_code()
     create_env()
+    install_pip_requirements()

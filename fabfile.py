@@ -1,5 +1,6 @@
-from fabric.api import sudo
+from fabric.api import env, sudo
 
+env.hosts = ['ubuntu@3.121.63.217']
 
 def install_packages():
     packages = [

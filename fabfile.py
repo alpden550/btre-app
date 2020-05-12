@@ -1,4 +1,5 @@
-from fabric.api import env, sudo
+from fabric.api import cd, env, run, sudo
+from fabric.contrib import files
 
 env.hosts = ['ubuntu@3.121.63.217']
 
@@ -19,6 +20,21 @@ def install_docker_compose():
     sudo('ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
 
 
+def create_env():
+    if not files.exists('/home/ubuntu/btre-app/env'):
+        run('python3 -m venv env')
+    else:
+        with cd('btre'):
+            run('git pull')
+
+
+def install_project_code():
+    if not files.exists('/home/ubuntu/btre-app'):
+        run('git clone https://github.com/alpden550/btre-app.git')
+
+
 def deploy():
     install_packages()
     install_docker_compose()
+    create_env()
+    install_project_code()

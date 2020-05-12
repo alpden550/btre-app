@@ -15,7 +15,3 @@ def install_packages(parameter_list):
 
 def deploy():
     install_packages()
-
-
-if __name__ == '__main__':
-    deploy()

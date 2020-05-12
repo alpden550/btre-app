@@ -9,7 +9,6 @@ def install_packages():
         'python3-venv',
         'nginx',
         'git-core',
-        'py-pip',
     ]
     sudo('apt-get install -y {}'.format(' '.join(packages)))
 

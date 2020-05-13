@@ -62,7 +62,7 @@ def configure_celery():
     sudo('chmod -R 755 /var/run/celery')
 
     if not files.exists('/etc/conf.d/celery'):
-        files.upload_template('fabric_templates/celery', '/etc/conf.d/celery', use_sudo=True)
+        files.upload_template('fabric_templates/celery', '/etc/default/celery', use_sudo=True)
     if not files.exists('/etc/systemd/system/celery.service'):
         files.upload_template('fabric_templates/celery.service', '/etc/systemd/system/celery.service', use_sudo=True)
 

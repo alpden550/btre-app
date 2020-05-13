@@ -74,8 +74,10 @@ def configure_gunicorn():
 
 
 def configure_nginx():
+    if files.exists('/etc/nginx/sites-enabled/default'):
+        sudo('rm /etc/nginx/sites-enabled/default')
+
     files.upload_template('fabric_templates/nginx.conf', '/etc/nginx/sites-available/btre', use_sudo=True)
-    sudo('ln -s /etc/nginx/sites-available/btre /etc/nginx/sites-enabled')
 
 
 def restart_services():

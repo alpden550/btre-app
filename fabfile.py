@@ -3,6 +3,7 @@ from fabric.contrib import files
 
 env.hosts = ['ubuntu@3.121.63.217']
 
+
 def install_packages():
     packages = [
         'python3-pip',
@@ -12,6 +13,21 @@ def install_packages():
         'git-core',
     ]
     sudo('apt-get install -y {}'.format(' '.join(packages)))
+
+
+def install_docker():
+    packages = [
+        'docker.io',
+        'docker-compose',
+    ]
+    sudo('apt-get install -y {}'.format(' '.join(packages)))
+    sudo('systemctl start docker')
+    sudo('systemctl enable docker')
+
+
+def run_docker_container():
+    if files.exists('/home/ubuntu/btre-app/docker-compose.yml'):
+        sudo('docker-compose up -d')
 
 
 def create_env():
@@ -35,5 +51,7 @@ def install_pip_requirements():
 def deploy():
     install_packages()
     install_project_code()
+    install_docker()
+    run_docker_container()
     create_env()
     install_pip_requirements()

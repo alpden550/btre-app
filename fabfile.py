@@ -27,7 +27,8 @@ def install_docker():
 
 def run_docker_container():
     if files.exists('/home/ubuntu/btre-app/docker-compose.yml'):
-        sudo('docker-compose up -d')
+        with cd('/home/ubuntu/btre-app/'):
+            sudo('docker-compose up -d')
 
 
 def create_env():

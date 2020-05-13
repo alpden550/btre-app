@@ -68,10 +68,17 @@ def handle_django():
         run('/home/ubuntu/btre-app/env/bin/python manage.py collectstatic')
 
 
+def configure_gunicorn():
+    files.upload_template('fabric_templates/gunicorn.socket', '/etc/systemd/system/gunicorn.socket', use_sudo=True)
+    files.upload_template('fabric_templates/gunicorn.service', '/etc/systemd/system/gunicorn.service', use_sudo=True)
+
+
 def restart_services():
     sudo('systemctl daemon-reload')
-    sudo('systemctl enable celery')
     sudo('systemctl start celery')
+    sudo('systemctl enable celery')
+    sudo('systemctl start gunicorn.socket')
+    sudo('systemctl enable gunicorn.socket')
 
 
 def deploy():
@@ -83,4 +90,5 @@ def deploy():
     install_pip_requirements()
     configure_celery()
     handle_django()
+    configure_gunicorn()
     restart_services()

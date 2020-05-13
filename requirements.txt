@@ -2,6 +2,7 @@ celery>=4.4.2,<4.5.2
 Django>=3.0.5,<3.10
 django-debug-toolbar>=2.2,<2.3
 environs>=7.4.0,<7.5.0
+gunicorn>=20.0.4,<20.1.4
 Fabric3==1.14.post1
 Pillow>=7.1.2,<7.2.2
 psycopg2-binary

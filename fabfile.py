@@ -10,7 +10,7 @@ def install_packages():
         'python3-dev',
         'python3-venv',
         'nginx',
-        'git-core',
+        'git',
     ]
     sudo('apt-get install -y {}'.format(' '.join(packages)))
 
@@ -48,10 +48,7 @@ def install_pip_requirements():
     with cd('/home/ubuntu/btre-app/'):
         run('/home/ubuntu/btre-app/env/bin/pip install -r requirements.txt --upgrade')
 
-
 def configure_celery():
-    # sudo('useradd celery -d /home/celery -b /bin/bash')
-
     if not files.exists('/var/log/celery'):
         sudo('mkdir /var/log/celery')
     if not files.exists('/var/run/celery'):
@@ -63,6 +60,12 @@ def configure_celery():
 
     files.upload_template('fabric_templates/celery', '/etc/default/celery', use_sudo=True)
     files.upload_template('fabric_templates/celery.service', '/etc/systemd/system/celery.service', use_sudo=True)
+
+
+def handle_django():
+    with cd('/home/ubuntu/btre-app/'):
+        run('/home/ubuntu/btre-app/env/bin/python manage.py migrate')
+        run('/home/ubuntu/btre-app/env/bin/python manage.py collectstatic')
 
 
 def restart_services():
@@ -79,4 +82,5 @@ def deploy():
     create_env()
     install_pip_requirements()
     configure_celery()
+    handle_django()
     restart_services()

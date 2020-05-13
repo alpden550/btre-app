@@ -50,7 +50,7 @@ def install_pip_requirements():
 
 
 def configure_celery():
-    sudo('useradd celery -d /home/celery -b /bin/bash')
+    # sudo('useradd celery -d /home/celery -b /bin/bash')
 
     if not files.exists('/var/log/celery'):
         sudo('mkdir /var/log/celery')

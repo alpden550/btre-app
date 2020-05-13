@@ -9,7 +9,7 @@ CELERY_BIN="/home/ubuntu/btre-app/env/bin/celery"
 
 # App instance to use
 # comment out this line if you don't use an app
-CELERY_APP="celery"
+CELERY_APP="btre"
 
 # How to call manage.py
 CELERYD_MULTI="multi"

@@ -56,21 +56,19 @@ def configure_celery():
         sudo('mkdir /var/log/celery')
     if not files.exists('/var/run/celery'):
         sudo('mkdir /var/run/celery')
-    sudo('chown -R celery:celery /var/log/celery')
+    sudo('chown -R ubuntu:ubuntu /var/log/celery')
     sudo('chmod -R 755 /var/log/celery')
-    sudo('chown -R celery:celery /var/run/celery')
+    sudo('chown -R ubuntu:ubuntu /var/run/celery')
     sudo('chmod -R 755 /var/run/celery')
 
-    if not files.exists('/etc/conf.d/celery'):
-        files.upload_template('fabric_templates/celery', '/etc/default/celery', use_sudo=True)
-    if not files.exists('/etc/systemd/system/celery.service'):
-        files.upload_template('fabric_templates/celery.service', '/etc/systemd/system/celery.service', use_sudo=True)
+    files.upload_template('fabric_templates/celery', '/etc/default/celery', use_sudo=True)
+    files.upload_template('fabric_templates/celery.service', '/etc/systemd/system/celery.service', use_sudo=True)
 
 
 def restart_services():
     sudo('systemctl daemon-reload')
-    sudo('sudo systemctl enable celery')
-    sudo('sudo systemctl start celery')
+    sudo('systemctl enable celery')
+    sudo('systemctl start celery')
 
 
 def deploy():

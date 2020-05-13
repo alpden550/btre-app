@@ -4,10 +4,10 @@ After=network.target
 
 [Service]
 Type=forking
-User=celery
-Group=celery
+User=ubuntu
+Group=ubuntu
 EnvironmentFile=/etc/default/celery
-WorkingDirectory=/home/ubuntu/btre-app/btre
+WorkingDirectory=/home/ubuntu/btre-app
 ExecStart=/bin/sh -c '${CELERY_BIN} multi start ${CELERYD_NODES} \
   -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
   --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS}'

@@ -51,9 +51,7 @@ def install_pip_requirements():
 
 def configure_celery():
     files.upload_template('fabric_templates/celeryd', '/etc/default/celeryd', use_sudo=True)
-    files.upload_template(
-        'fabric_templates/celeryd.service',
-        '/etc/systemd/system/celerybeat.service',
+    files.upload_template('fabric_templates/celeryd.service', '/etc/systemd/system/celeryd.service',
         use_sudo=True)
     if not files.exists('/var/log/celery'):
         sudo('mkdir /var/log/celery')

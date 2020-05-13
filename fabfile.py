@@ -49,6 +49,25 @@ def install_pip_requirements():
         run('/home/ubuntu/btre-app/env/bin/pip install -r requirements.txt --upgrade')
 
 
+def configure_celery():
+    files.upload_template('fabric_templates/celeryd', '/etc/default/celeryd', use_sudo=True)
+    files.upload_template(
+        'fabric_templates/celeryd.service',
+        '/etc/systemd/system/celerybeat.service',
+        use_sudo=True)
+    if not files.exists('/var/log/celery'):
+        sudo('mkdir /var/log/celery')
+    if not files.exists('/var/run/celery'):
+        sudo('mkdir /var/run/celery')
+    sudo('chown ubuntu:ubuntu /var/log/celery /var/run/celery')
+
+
+def restart_services():
+    sudo('systemctl daemon-reload')
+    sudo('sudo systemctl enable celeryd')
+    sudo('sudo systemctl start celeryd')
+
+
 def deploy():
     install_packages()
     install_project_code()
@@ -56,3 +75,5 @@ def deploy():
     run_docker_container()
     create_env()
     install_pip_requirements()
+    configure_celery()
+    restart_services()

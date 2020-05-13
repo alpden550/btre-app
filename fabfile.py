@@ -63,14 +63,18 @@ def configure_celery():
 
 
 def handle_django():
-    with cd('/home/ubuntu/btre-app/'):
-        run('/home/ubuntu/btre-app/env/bin/python manage.py migrate')
-        run('/home/ubuntu/btre-app/env/bin/python manage.py collectstatic')
+    run('/home/ubuntu/btre-app/env/bin/python manage.py migrate')
+    run('/home/ubuntu/btre-app/env/bin/python manage.py collectstatic')
 
 
 def configure_gunicorn():
     files.upload_template('fabric_templates/gunicorn.socket', '/etc/systemd/system/gunicorn.socket', use_sudo=True)
     files.upload_template('fabric_templates/gunicorn.service', '/etc/systemd/system/gunicorn.service', use_sudo=True)
+
+
+def configure_nginx():
+    files.upload_template('fabric_templates/nginx.conf', '/etc/nginx/sites-available/btre', use_sudo=True)
+    sudo('ln -s /etc/nginx/sites-available/btre /etc/nginx/sites-enabled')
 
 
 def restart_services():
@@ -91,4 +95,5 @@ def deploy():
     configure_celery()
     handle_django()
     configure_gunicorn()
+    configure_nginx()
     restart_services()

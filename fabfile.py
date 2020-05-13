@@ -77,7 +77,7 @@ def configure_nginx():
     if files.exists('/etc/nginx/sites-enabled/default'):
         sudo('rm /etc/nginx/sites-enabled/default')
 
-    files.upload_template('fabric_templates/nginx.conf', '/etc/nginx/sites-available/btre', use_sudo=True)
+    files.upload_template('fabric_templates/nginx.conf', '/etc/nginx/sites-available/btre.conf', use_sudo=True)
 
 
 def restart_services():

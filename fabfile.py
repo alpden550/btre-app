@@ -63,8 +63,9 @@ def configure_celery():
 
 
 def handle_django():
-    run('/home/ubuntu/btre-app/env/bin/python manage.py migrate')
-    run('/home/ubuntu/btre-app/env/bin/python manage.py collectstatic')
+    with cd('/home/ubuntu/btre-app/'):
+        run('/home/ubuntu/btre-app/env/bin/python manage.py migrate')
+        run('/home/ubuntu/btre-app/env/bin/python manage.py collectstatic')
 
 
 def configure_gunicorn():

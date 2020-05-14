@@ -85,6 +85,7 @@ def restart_services():
     sudo('systemctl start gunicorn.socket')
     sudo('systemctl enable gunicorn.socket')
     sudo('systemctl restart gunicorn')
+    sudo('systemctl restart nginx')
     sudo("ufw allow 'Nginx Full'")
 
 

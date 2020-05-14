@@ -2,6 +2,8 @@
 
 Django web-app to manage real estate service, realtors, listing and property inquiries.
 
+Site example: [https://appssale.ru](https://appssale.ru)
+
 ## How to install
 
 Download code or clone it from Github, and install dependencies.
